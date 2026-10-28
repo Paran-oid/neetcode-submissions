@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+
+        size_t n = nums.size();
+        std::vector<int> res(n);
+        std::vector<int> suf(n);
+        std::vector<int> pre(n);
+
+        pre[0] = 1;
+        suf[n - 1] = 1;
+        for(size_t i = 1; i < n; i++){
+            pre[i] = nums[i - 1] * pre[i - 1];
+        }
+
+        for(int i = n - 2; i >= 0; i--){
+            suf[i] = suf[i + 1] * nums[i + 1];
+        }
+
+        for(size_t i = 0; i < n; i++){
+            res[i] = suf[i] * pre[i];
+        }
+
+        return res;
+    }
+};
